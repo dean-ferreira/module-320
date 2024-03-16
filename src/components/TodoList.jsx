@@ -31,6 +31,13 @@ function todoReducer(state, action) {
                         : todo
                 ),
             };
+        case 'DELETE':
+            return {
+                ...state,
+                todos: state.todos.filter(
+                    (todo, index) => index !== action.payload
+                ),
+            };
         default:
             return state;
     }
@@ -54,6 +61,10 @@ function TodoList() {
         dispatch({ type: 'TOGGLE', payload: index });
     };
 
+    const handleDelete = (index) => {
+        dispatch({ type: 'DELETE', payload: index });
+    };
+
     return (
         <div className="todo-list">
             <h1>Create Todo List</h1>
@@ -73,6 +84,12 @@ function TodoList() {
                             onChange={() => handleToggle(index)}
                         />
                         {todo.todo}
+                        <button
+                            onClick={() => handleDelete(index)}
+                            disabled={!todo.complete}
+                        >
+                            Delete
+                        </button>
                     </li>
                 ))}
             </ul>
