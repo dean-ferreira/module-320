@@ -38,6 +38,26 @@ function todoReducer(state, action) {
                     (todo, index) => index !== action.payload
                 ),
             };
+        case 'EDIT':
+            return {
+                ...state,
+                todos: state.todos.map((todo, index) =>
+                    index === action.payload ? { ...todo, editing: true } : todo
+                ),
+            };
+        case 'SAVE':
+            return {
+                ...state,
+                todos: state.todos.map((todo, index) =>
+                    index === action.payload.index
+                        ? {
+                              todo: action.payload.editedTodo,
+                              complete: todo.complete,
+                              editing: false,
+                          }
+                        : todo
+                ),
+            };
         default:
             return state;
     }
@@ -65,6 +85,14 @@ function TodoList() {
         dispatch({ type: 'DELETE', payload: index });
     };
 
+    const handleEdit = (index) => {
+        dispatch({ type: 'EDIT', payload: index });
+    };
+
+    const handleSaveEdit = (index, editedTodo) => {
+        dispatch({ type: 'SAVE', payload: { index, editedTodo } });
+    };
+
     return (
         <div className="todo-list">
             <h1>Create Todo List</h1>
@@ -83,13 +111,43 @@ function TodoList() {
                             checked={todo.complete}
                             onChange={() => handleToggle(index)}
                         />
-                        {todo.todo}
-                        <button
-                            onClick={() => handleDelete(index)}
-                            disabled={!todo.complete}
-                        >
-                            Delete
-                        </button>
+                        {todo.editing ? (
+                            <>
+                                <input
+                                    type="text"
+                                    value={todo.todo}
+                                    onChange={(e) => handleInputChange(e)}
+                                />
+                                <button
+                                    onClick={() =>
+                                        handleSaveEdit(index, newTodo)
+                                    }
+                                >
+                                    Save
+                                </button>
+                            </>
+                        ) : (
+                            <>
+                                <span
+                                    style={{
+                                        textDecoration: todo.complete
+                                            ? 'line-through'
+                                            : 'none',
+                                    }}
+                                >
+                                    {todo.todo}
+                                </span>
+                                <button onClick={() => handleEdit(index)}>
+                                    Edit
+                                </button>
+                                <button
+                                    onClick={() => handleDelete(index)}
+                                    disabled={!todo.complete}
+                                >
+                                    Delete
+                                </button>
+                            </>
+                        )}
                     </li>
                 ))}
             </ul>
