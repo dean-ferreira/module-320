@@ -22,6 +22,15 @@ function todoReducer(state, action) {
                 ...state,
                 newTodo: action.payload,
             };
+        case 'TOGGLE':
+            return {
+                ...state,
+                todos: state.todos.map((todo, index) =>
+                    index === action.payload
+                        ? { ...todo, complete: !todo.complete }
+                        : todo
+                ),
+            };
         default:
             return state;
     }
@@ -41,6 +50,10 @@ function TodoList() {
         }
     };
 
+    const handleToggle = (index) => {
+        dispatch({ type: 'TOGGLE', payload: index });
+    };
+
     return (
         <div className="todo-list">
             <h1>Create Todo List</h1>
@@ -53,7 +66,14 @@ function TodoList() {
             <button onClick={handleAdd}>Add</button>
             <ul>
                 {todos.map((todo, index) => (
-                    <li key={index}>{todo.todo}</li>
+                    <li key={index}>
+                        <input
+                            type="checkbox"
+                            checked={todo.complete}
+                            onChange={() => handleToggle(index)}
+                        />
+                        {todo.todo}
+                    </li>
                 ))}
             </ul>
         </div>
