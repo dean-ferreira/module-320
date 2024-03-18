@@ -1,9 +1,21 @@
 import './App.css';
 
+// Import pages
+import Main from './pages/Main';
+import AllStates from './pages/AllStates';
+import NavBar from './components/NavBar';
+
+// Import react router dom tools
+import { Route, Routes } from 'react-router-dom';
+
 function App() {
     return (
         <>
-            <h1>React App</h1>
+            <NavBar />
+            <Routes>
+                <Route path="/" element={<Main />} />
+                <Route path="/states" element={<AllStates />} />
+            </Routes>
         </>
     );
 }
