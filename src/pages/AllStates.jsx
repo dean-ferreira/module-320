@@ -31,12 +31,38 @@ function Main() {
             <div>
                 All States
                 {states.map((state, index) => (
-                    <div key={index}>
-                        <h2>{state.name}</h2>
-                        <h3>{state.gasoline}</h3>
-                        <h3>{state.midGrade}</h3>
-                        <h3>{state.premium}</h3>
-                        <h3>{state.diesel}</h3>
+                    <div key={index} className="state-tile">
+                        <h2 className="state-name">{state.name}</h2>
+                        <div className="fuel-selection">
+                            <div className="fuel-option">
+                                <h3 className="grade-name">Regular</h3>
+                                <div className="price grade-price">
+                                    {state.gasoline}
+                                </div>
+                                <button class="grade-button">87</button>
+                            </div>
+                            <div className="fuel-option">
+                                <h3 className="grade-name">Mid-Grade</h3>
+                                <div className="price grade-price">
+                                    {state.midGrade}
+                                </div>
+                                <button class="grade-button">89</button>
+                            </div>
+                            <div className="fuel-option">
+                                <h3 className="grade-name">Premium</h3>
+                                <div className="price grade-price">
+                                    {state.premium}
+                                </div>
+                                <button class="grade-button">91</button>
+                            </div>
+                            <div className="fuel-option">
+                                <h3 className="grade-name">Diesel</h3>
+                                <div className="price grade-price">
+                                    {state.diesel}
+                                </div>
+                                <button class="grade-button">Diesel</button>
+                            </div>
+                        </div>
                     </div>
                 ))}
             </div>
