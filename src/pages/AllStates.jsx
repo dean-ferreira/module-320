@@ -28,8 +28,8 @@ function Main() {
 
     const loaded = () => {
         return (
-            <div>
-                All States
+            <div className="container content">
+                <h2 className="content-title">All States</h2>
                 {states.map((state, index) => (
                     <div key={index} className="state-tile">
                         <h2 className="state-name">{state.name}</h2>
