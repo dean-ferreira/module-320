@@ -9,12 +9,16 @@ function StateTile(props) {
         setSortOrder(e.target.value);
     };
 
-    // Sort states by name
+    // Sort states by name or average price
     const sortedStates = props.statePrices.sort((a, b) => {
-        if (sortOrder === 'asc') {
+        if (sortOrder === 'a-z') {
             return a.name.localeCompare(b.name);
-        } else {
+        } else if (sortOrder === 'z-a') {
             return b.name.localeCompare(a.name);
+        } else if (sortOrder === 'asc') {
+            return a.average - b.average;
+        } else if (sortOrder === 'desc') {
+            return b.average - a.average;
         }
     });
 
@@ -27,8 +31,10 @@ function StateTile(props) {
                     value={sortOrder}
                     onChange={handleSortChange}
                 >
-                    <option value="asc">A-Z</option>
-                    <option value="desc">Z-A</option>
+                    <option value="a-z">A-Z</option>
+                    <option value="z-a">Z-A</option>
+                    <option value="asc">Low - High</option>
+                    <option value="desc">High - Low</option>
                 </select>
             </form>
             {sortedStates.map((state, index) => (
