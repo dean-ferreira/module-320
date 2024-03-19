@@ -1,9 +1,37 @@
 import '../App.css';
 
+import { useState } from 'react';
+
 function StateTile(props) {
+    const [sortOrder, setSortOrder] = useState('asc');
+
+    const handleSortChange = (e) => {
+        setSortOrder(e.target.value);
+    };
+
+    // Sort states by name
+    const sortedStates = props.statePrices.sort((a, b) => {
+        if (sortOrder === 'asc') {
+            return a.name.localeCompare(b.name);
+        } else {
+            return b.name.localeCompare(a.name);
+        }
+    });
+
     return (
         <div className="container content">
-            {props.statePrices.map((state, index) => (
+            <form className="sort-form">
+                <label htmlFor="sortOrder">Sort by:</label>
+                <select
+                    id="sortOrder"
+                    value={sortOrder}
+                    onChange={handleSortChange}
+                >
+                    <option value="asc">A-Z</option>
+                    <option value="desc">Z-A</option>
+                </select>
+            </form>
+            {sortedStates.map((state, index) => (
                 <div key={index} className="state-tile">
                     <h2 className="state-name">{state.name}</h2>
                     <div className="fuel-selection">
