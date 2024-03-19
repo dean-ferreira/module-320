@@ -6,12 +6,13 @@ import { StatePriceContext } from '../contexts/StatePriceContext';
 // Import components
 import StateTile from '../components/StateTile';
 
-function Main() {
+function AllStates() {
     const { statePrices } = useContext(StatePriceContext);
 
     const loaded = () => {
         return (
             <div className="container content">
+                <h2 className="content-title">All States</h2>
                 <StateTile statePrices={statePrices} />
             </div>
         );
@@ -24,4 +25,4 @@ function Main() {
     return statePrices ? loaded() : loading();
 }
 
-export default Main;
+export default AllStates;
