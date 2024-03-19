@@ -3,6 +3,28 @@ import axios from 'axios';
 
 const StatePriceContext = createContext();
 
+function calculateAveragePrice(state) {
+    let total =
+        parseFloat(state.gasoline) +
+        parseFloat(state.midGrade) +
+        parseFloat(state.premium) +
+        parseFloat(state.diesel);
+    return total / 4;
+}
+
+function getAveragePrices(states) {
+    return states.map((state) => {
+        return {
+            gasoline: state.gasoline,
+            midGrade: state.midGrade,
+            premium: state.premium,
+            diesel: state.diesel,
+            name: state.name,
+            average: calculateAveragePrice(state),
+        };
+    });
+}
+
 const StatePriceProvider = ({ children }) => {
     const [statePrices, setStatePrices] = useState(0);
     let apiKey = import.meta.env.VITE_API_KEY;
@@ -18,7 +40,7 @@ const StatePriceProvider = ({ children }) => {
     async function getPrices() {
         try {
             const response = await axios(options);
-            setStatePrices(response.data.result);
+            setStatePrices(getAveragePrices(response.data.result));
         } catch (error) {
             console.error('Error:', error);
         }

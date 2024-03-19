@@ -6,29 +6,8 @@ import { StatePriceContext } from '../contexts/StatePriceContext';
 // Import components
 import StateTile from '../components/StateTile';
 
-function calculateAveragePrice(state) {
-    let total =
-        parseFloat(state.gasoline) +
-        parseFloat(state.midGrade) +
-        parseFloat(state.premium) +
-        parseFloat(state.diesel);
-    return total / 4;
-}
-
 function findThreeCheapestStates(statesPrices) {
-    let averages = statesPrices.map((state) => {
-        return {
-            gasoline: state.gasoline,
-            midGrade: state.midGrade,
-            premium: state.premium,
-            diesel: state.diesel,
-            name: state.name,
-            average: calculateAveragePrice(state),
-        };
-    });
-
-    averages.sort((a, b) => a.average - b.average);
-
+    const averages = statesPrices.sort((a, b) => a.average - b.average);
     return averages.slice(0, 3);
 }
 
