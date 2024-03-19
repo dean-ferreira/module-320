@@ -1,8 +1,9 @@
-import { useState, useEffect, useContext } from 'react';
-import axios from 'axios';
+import { useContext } from 'react';
 
+// Import contexts
 import { StatePriceContext } from '../contexts/StatePriceContext';
 
+// Import components
 import StateTile from '../components/StateTile';
 
 function Main() {
